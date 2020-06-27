@@ -25,8 +25,8 @@
          <children>
             <GridPane prefHeight="150.0" prefWidth="300.0">
               <columnConstraints>
-                <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="132.0" minWidth="10.0" prefWidth="33.0" />
-                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="277.0" minWidth="10.0" prefWidth="274.0" />
+                <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="132.0" minWidth="10.0" prefWidth="47.0" />
+                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="277.0" minWidth="10.0" prefWidth="260.0" />
                   <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="166.0" minWidth="10.0" prefWidth="121.0" />
               </columnConstraints>
               <rowConstraints>
@@ -47,12 +47,12 @@
                         <Insets right="5.0" />
                      </GridPane.margin>
                   </Button>
-                  <Button fx:id="btnDoCollegamento" mnemonicParsing="false" onAction="#doDreamTeam" prefWidth="200.0" text="Collegamento" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                  <Button fx:id="btnCollegamento" mnemonicParsing="false" onAction="#doCollegamento" prefWidth="200.0" text="Collegamento" GridPane.columnIndex="2" GridPane.rowIndex="3">
                      <GridPane.margin>
                         <Insets right="5.0" />
                      </GridPane.margin>
                   </Button>
-                  <Label text="x">
+                  <Label text="MIN">
                      <GridPane.margin>
                         <Insets right="10.0" />
                      </GridPane.margin>
@@ -63,12 +63,11 @@
                      </GridPane.margin>
                   </Label>
                   <TextField fx:id="txtMinuti" maxWidth="-Infinity" prefWidth="250.0" GridPane.columnIndex="1" />
-                  <Label text="y" GridPane.rowIndex="1">
+                  <Label text="MESE" GridPane.rowIndex="1">
                      <padding>
                         <Insets right="10.0" />
                      </padding>
                   </Label>
-                  <TextField fx:id="txtMese" maxWidth="-Infinity" prefWidth="250.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                   <ComboBox fx:id="cmbM1" prefWidth="250.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                   <Label text="m2" GridPane.rowIndex="4">
                      <GridPane.margin>
@@ -76,6 +75,7 @@
                      </GridPane.margin>
                   </Label>
                   <ComboBox fx:id="cmbM2" prefWidth="250.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                  <ComboBox fx:id="cmbMese" prefWidth="250.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                </children>
             </GridPane>
             <TextArea fx:id="txtResult" prefHeight="354.0" prefWidth="428.0">

@@ -5,8 +5,9 @@
 package it.polito.tdp.PremierLeague;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
-
 import it.polito.tdp.PremierLeague.model.Model;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -31,14 +32,14 @@ public class FXMLController {
     @FXML // fx:id="btnConnessioneMassima"
     private Button btnConnessioneMassima; // Value injected by FXMLLoader
 
-    @FXML // fx:id="btnDoCollegamento"
-    private Button btnDoCollegamento; // Value injected by FXMLLoader
+    @FXML // fx:id="btnCollegamento"
+    private Button btnCollegamento; // Value injected by FXMLLoader
 
     @FXML // fx:id="txtMinuti"
     private TextField txtMinuti; // Value injected by FXMLLoader
 
-    @FXML // fx:id="txtMese"
-    private TextField txtMese; // Value injected by FXMLLoader
+    @FXML // fx:id="cmbMese"
+    private ComboBox<?> cmbMese; // Value injected by FXMLLoader
 
     @FXML // fx:id="cmbM1"
     private ComboBox<?> cmbM1; // Value injected by FXMLLoader
@@ -51,27 +52,26 @@ public class FXMLController {
 
     @FXML
     void doConnessioneMassima(ActionEvent event) {
-
+    	
     }
 
     @FXML
     void doCreaGrafo(ActionEvent event) {
-
+    	
     }
 
     @FXML
-    void doDreamTeam(ActionEvent event) {
-
+    void doCollegamento(ActionEvent event) {
+    	
     }
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
         assert btnCreaGrafo != null : "fx:id=\"btnCreaGrafo\" was not injected: check your FXML file 'Scene.fxml'.";
         assert btnConnessioneMassima != null : "fx:id=\"btnConnessioneMassima\" was not injected: check your FXML file 'Scene.fxml'.";
-        assert btnDoCollegamento != null : "fx:id=\"btnDoCollegamento\" was not injected: check your FXML file 'Scene.fxml'.";
+        assert btnCollegamento != null : "fx:id=\"btnCollegamento\" was not injected: check your FXML file 'Scene.fxml'.";
         assert txtMinuti != null : "fx:id=\"txtMinuti\" was not injected: check your FXML file 'Scene.fxml'.";
-        assert txtMese != null : "fx:id=\"txtMese\" was not injected: check your FXML file 'Scene.fxml'.";
-        assert cmbM1 != null : "fx:id=\"cmbM1\" was not injected: check your FXML file 'Scene.fxml'.";
+        assert cmbMese != null : "fx:id=\"cmbMese\" was not injected: check your FXML file 'Scene.fxml'.";        assert cmbM1 != null : "fx:id=\"cmbM1\" was not injected: check your FXML file 'Scene.fxml'.";
         assert cmbM2 != null : "fx:id=\"cmbM2\" was not injected: check your FXML file 'Scene.fxml'.";
         assert txtResult != null : "fx:id=\"txtResult\" was not injected: check your FXML file 'Scene.fxml'.";
 
@@ -79,5 +79,8 @@ public class FXMLController {
     
     public void setModel(Model model) {
     	this.model = model;
+  
     }
+    
+    
 }
