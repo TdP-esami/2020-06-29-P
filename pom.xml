@@ -3,11 +3,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>it.polito.tdp</groupId>
-    <artifactId>2020-06-03-premierleague</artifactId>
+    <artifactId>2020-06-29-premierleague</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>2020-06-03-premierleague</name>
+    <name>2020-06-29-premierleague</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
