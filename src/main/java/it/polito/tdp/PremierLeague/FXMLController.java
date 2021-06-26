@@ -8,6 +8,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+
+import it.polito.tdp.PremierLeague.model.CoppiaMatch;
 import it.polito.tdp.PremierLeague.model.Model;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -39,7 +41,7 @@ public class FXMLController {
     private TextField txtMinuti; // Value injected by FXMLLoader
 
     @FXML // fx:id="cmbMese"
-    private ComboBox<?> cmbMese; // Value injected by FXMLLoader
+    private ComboBox<Integer> cmbMese; // Value injected by FXMLLoader
 
     @FXML // fx:id="cmbM1"
     private ComboBox<?> cmbM1; // Value injected by FXMLLoader
@@ -53,15 +55,66 @@ public class FXMLController {
     @FXML
     void doConnessioneMassima(ActionEvent event) {
     	
+    	this.txtResult.clear();
+    	
+       int min;
+    	
+    	try {
+    		min=Integer.parseInt(this.txtMinuti.getText());
+    	}catch(NumberFormatException nfe) {
+    		this.txtResult.appendText("Errore: inserire un numero!!");
+    		return;
+    	}
+    	
+    	int mese;
+    	try {
+    	mese=this.cmbMese.getValue();
+    	}catch(NullPointerException npe) {
+    		this.txtResult.setText("Errore: scegliere un mese dal menu!!");
+    		return;
+    	}
+    	
+    	model.creaGrafo(mese, min);
+    	
+    	this.txtResult.appendText("Coppie con connessione massima: \n");
+    	
+    	for(CoppiaMatch cm : this.model.getMigliore(mese, min)) {
+    	     this.txtResult.appendText(cm.getM1()+"-"+cm.getM2()+"\n");
+    	}
     }
 
     @FXML
     void doCreaGrafo(ActionEvent event) {
     	
+    	int min;
+    	
+    	try {
+    		min=Integer.parseInt(this.txtMinuti.getText());
+    	}catch(NumberFormatException nfe) {
+    		this.txtResult.appendText("Errore: inserire un numero!!");
+    		return;
+    	}
+    	
+    	int mese;
+    	try {
+    	mese=this.cmbMese.getValue();
+    	}catch(NullPointerException npe) {
+    		this.txtResult.setText("Errore: scegliere un mese dal menu!!");
+    		return;
+    	}
+    	
+    	model.creaGrafo(mese, min);
+    	
+    	this.txtResult.appendText("GRAFO CREATO!! \n");
+    	this.txtResult.appendText("Numero di vertici: "+model.getNumeroVertici()+"\n");  
+    	this.txtResult.appendText("Numero di archi: "+model.getNumeroArchi());  
+    	
     }
 
     @FXML
     void doCollegamento(ActionEvent event) {
+    	
+    	
     	
     }
 
@@ -79,7 +132,7 @@ public class FXMLController {
     
     public void setModel(Model model) {
     	this.model = model;
-  
+        this.cmbMese.getItems().addAll(model.getMesi());
     }
     
     
