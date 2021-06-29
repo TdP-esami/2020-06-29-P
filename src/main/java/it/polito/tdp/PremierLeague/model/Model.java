@@ -2,6 +2,7 @@ package it.polito.tdp.PremierLeague.model;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -17,6 +18,8 @@ public class Model {
 	private PremierLeagueDAO dao;
 	private Graph<Match, DefaultWeightedEdge> grafo;
 	private Map<Integer,Match> idMap;
+	private List<Match> percorsoMigliore;
+	private int pesoMax;
 	
 	public Model() {
 		dao=new PremierLeagueDAO();
@@ -81,7 +84,68 @@ public class Model {
 		
 	}
 	
+	public Graph<Match, DefaultWeightedEdge> getGrafo(){
+		
+		if(this.grafo== null) {
+			return null;
+		}
+		else
+		   return this.grafo;
+	}
 	
+	public List<Match> percorsoMigliore(Match m1, Match m2) {
+		
+		this.percorsoMigliore= new ArrayList<>();
+		List<Match> parziale = new ArrayList<>();
+		
+		this.pesoMax= Integer.MIN_VALUE;
+		
+		//aggiungo la sorgente alla lista parziale
+		
+		parziale.add(m1);
+		
+		int pesoParziale=0;
+		cerca(m2,parziale, pesoParziale);
+		
+		return percorsoMigliore;
+}
+	
+	private void cerca(Match m2, List<Match> parziale, int pesoParziale) {
+	
+		//condizione terminale
+		
+		//se siamo arrivati a destinazione (ovvero al vertice m2)
+		if(parziale.get(parziale.size()-1).equals(m2)) {
+			
+			//va verificato anche che tale soluzione sia ottima (ovvero abbia peso massimo)
+			 if(pesoParziale>this.pesoMax) {
+				 this.percorsoMigliore = new LinkedList<>(parziale);
+			 }
+			
+		}
+		
+		//altrimenti vanno considerati tutti i vicini
+		for(Match vicino: Graphs.neighborListOf(this.grafo, parziale.get(parziale.size()-1))) {
+			//verificare se "vicino" è un match tra le due squadre del vertice precedente
+			if(!(parziale.get(parziale.size()-1).getTeamHomeID()==vicino.getTeamHomeID() && parziale.get(parziale.size()-1).getTeamAwayID()== vicino.getTeamAwayID())|| (parziale.get(parziale.size()-1).getTeamHomeID()==vicino.getTeamAwayID() && parziale.get(parziale.size()-1).getTeamAwayID()== vicino.getTeamHomeID())){
+				parziale.add(vicino);
+				DefaultWeightedEdge e = this.grafo.getEdge(parziale.get(parziale.size()-1), vicino);
+				pesoParziale+= this.grafo.getEdgeWeight(e);
+				
+				//ricorsione
+				cerca(m2,parziale,pesoParziale);
+				
+				//backtracking
+				pesoParziale-= this.grafo.getEdgeWeight(e);
+				parziale.remove(parziale.size()-1);
+				
+				
+			}
+		}
+		
+	}
+
+
 	public List<Integer> getMesi(){
 		List<Integer> mesi = new ArrayList<>();
 		
