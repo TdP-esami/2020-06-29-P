@@ -12,7 +12,7 @@ import javafx.stage.Stage;
 
 
 public class EntryPoint extends Application {
-
+//prova
     @Override
     public void start(Stage stage) throws Exception {
     	FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Scene.fxml"));
