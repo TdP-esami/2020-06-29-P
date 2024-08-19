@@ -8,6 +8,9 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+
+import it.polito.tdp.PremierLeague.model.CoppiaMatch;
+import it.polito.tdp.PremierLeague.model.Match;
 import it.polito.tdp.PremierLeague.model.Model;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -39,13 +42,13 @@ public class FXMLController {
     private TextField txtMinuti; // Value injected by FXMLLoader
 
     @FXML // fx:id="cmbMese"
-    private ComboBox<?> cmbMese; // Value injected by FXMLLoader
+    private ComboBox<Integer> cmbMese; // Value injected by FXMLLoader
 
     @FXML // fx:id="cmbM1"
-    private ComboBox<?> cmbM1; // Value injected by FXMLLoader
+    private ComboBox<Match> cmbM1; // Value injected by FXMLLoader
 
     @FXML // fx:id="cmbM2"
-    private ComboBox<?> cmbM2; // Value injected by FXMLLoader
+    private ComboBox<Match> cmbM2; // Value injected by FXMLLoader
 
     @FXML // fx:id="txtResult"
     private TextArea txtResult; // Value injected by FXMLLoader
@@ -53,15 +56,93 @@ public class FXMLController {
     @FXML
     void doConnessioneMassima(ActionEvent event) {
     	
+    	this.txtResult.clear();
+    	
+       int min;
+    	
+    	try {
+    		min=Integer.parseInt(this.txtMinuti.getText());
+    	}catch(NumberFormatException nfe) {
+    		this.txtResult.appendText("Errore: inserire un numero!!");
+    		return;
+    	}
+    	
+    	int mese;
+    	try {
+    	mese=this.cmbMese.getValue();
+    	}catch(NullPointerException npe) {
+    		this.txtResult.setText("Errore: scegliere un mese dal menu!!");
+    		return;
+    	}
+    	
+    	model.creaGrafo(mese, min);
+    	
+    	
+    	
+    	this.txtResult.appendText("Coppie con connessione massima: \n");
+    	
+    	for(CoppiaMatch cm : this.model.getMigliore(mese, min)) {
+    	     this.txtResult.appendText(cm.getM1()+"-"+cm.getM2()+"\n");
+    	}
     }
 
     @FXML
     void doCreaGrafo(ActionEvent event) {
     	
+    	int min;
+    	
+    	try {
+    		min=Integer.parseInt(this.txtMinuti.getText());
+    	}catch(NumberFormatException nfe) {
+    		this.txtResult.appendText("Errore: inserire un numero!!");
+    		return;
+    	}
+    	
+    	int mese;
+    	try {
+    	mese=this.cmbMese.getValue();
+    	}catch(NullPointerException npe) {
+    		this.txtResult.setText("Errore: scegliere un mese dal menu!!");
+    		return;
+    	}
+    	
+    	model.creaGrafo(mese, min);
+    	
+    	this.cmbM1.getItems().addAll(this.model.getGrafo().vertexSet());
+    	this.cmbM2.getItems().addAll(this.model.getGrafo().vertexSet());
+    	
+    	this.txtResult.appendText("GRAFO CREATO!! \n");
+    	this.txtResult.appendText("Numero di vertici: "+model.getNumeroVertici()+"\n");  
+    	this.txtResult.appendText("Numero di archi: "+model.getNumeroArchi());  
+    	
     }
 
     @FXML
     void doCollegamento(ActionEvent event) {
+    	
+    	if(model.getGrafo()==null) {
+    		this.txtResult.setText("Errore: crea prima il grafo!!");
+    		return;
+    	}
+    	
+    	Match m1 = this.cmbM1.getValue();
+    	Match m2= this.cmbM2.getValue();
+    	
+    	if(m1.getMatchID()==m2.getMatchID()) {
+    		this.txtResult.appendText("Errore: hai scelto la stessa partita in entrambi i menu!!");
+    		return;
+    	}
+    	
+    	if(m1==null || m2==null) {
+    		this.txtResult.appendText("Errore: selezionare entrambi i match!!");
+    		return;
+    	}
+    	
+    	List<Match> percorso= this.model.percorsoMigliore(m1, m2);
+    	
+    	for(Match m : percorso) {
+    		this.txtResult.appendText(""+m.toString()+"---");
+    	}
     	
     }
 
@@ -79,7 +160,7 @@ public class FXMLController {
     
     public void setModel(Model model) {
     	this.model = model;
-  
+        this.cmbMese.getItems().addAll(model.getMesi());
     }
     
     
